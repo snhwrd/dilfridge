@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore a cryogen-free dilution refrigerator in 3D, from the room-temperature flange to the helium mixing chamber.">
+  <meta name="theme-color" content="#f8f7f3">
+  <title>Inside a dilution refrigerator | Cryogenics field guide</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#cutaway">Skip to the cutaway</a>
+  <header class="masthead">
+    <div class="page masthead-inner">
+      <a class="wordmark" href="#top"><span class="mark" aria-hidden="true">✳</span> Cryogenics field guide</a>
+      <nav aria-label="On this page">
+        <a href="#cutaway">Cutaway</a>
+        <a href="#cycle">Cooling cycle</a>
+        <a href="#specifications">Specifications</a>
+      </nav>
+    </div>
+  </header>
+  <main class="page" id="top">
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow"><span></span> Low-temperature physics</p>
+      <div class="intro-grid">
+        <h1 id="title">Inside a dilution<br class="desktop-break"> refrigerator</h1>
+        <p>A two-stage cryocooler does the precooling. A circulating mixture of helium isotopes takes the experiment the rest of the way, down to tens of millikelvin.</p>
+      </div>
+    </section>
+
+    <section id="cutaway" aria-labelledby="cutaway-title">
+      <div class="model-card hero-card">
+        <div class="model-bar">
+          <h2 id="cutaway-title"><span class="view-icon" aria-hidden="true">◫</span> Cryostat cutaway</h2>
+          <div class="model-controls">
+            <button type="button" data-annotations aria-pressed="true"><span class="toggle" aria-hidden="true"></span> Annotations</button>
+            <button type="button" data-shell aria-pressed="true">Cutaway on</button>
+            <button type="button" data-reset aria-label="Reset cryostat view"><span aria-hidden="true">↺</span> Reset</button>
+          </div>
+        </div>
+        <div class="hero-grid">
+          <div class="viewport hero-viewport" data-model="cryostat" tabindex="0" aria-label="Interactive cryostat. Drag or use arrow keys to orbit. Use plus and minus to zoom.">
+            <div class="scale-rule" hidden aria-hidden="true"><span></span>100 mm</div>
+            <div class="viewport-art"></div>
+            <div class="model-help" aria-hidden="true">Drag to orbit <span>·</span> Click, then scroll to zoom</div>
+            <p class="fallback" hidden>3D rendering is unavailable. The stage guide and specifications below describe the assembly.</p>
+          </div>
+          <aside class="stage-rail" aria-labelledby="stage-title">
+            <h3 id="stage-title">Thermal stages</h3>
+            <p class="rail-sub">From room temperature to base</p>
+            <div class="stages">
+              <button type="button" data-stage="0" aria-pressed="false"><span class="stage-dot s0"></span><span>Top flange</span><strong>≈ 300 K</strong></button>
+              <button type="button" data-stage="1" aria-pressed="false"><span class="stage-dot s1"></span><span>First stage</span><strong>~ 50 K</strong></button>
+              <button type="button" data-stage="2" aria-pressed="false"><span class="stage-dot s2"></span><span>Second stage</span><strong>~ 4 K</strong></button>
+              <button type="button" data-stage="3" aria-pressed="false"><span class="stage-dot s3"></span><span>Still</span><strong>~ 0.7 K</strong></button>
+              <button type="button" data-stage="4" aria-pressed="false"><span class="stage-dot s4"></span><span>Cold plate</span><strong>~ 0.1 K</strong></button>
+              <button type="button" data-stage="5" aria-pressed="false"><span class="stage-dot s5"></span><span>Mixing chamber</span><strong>~ 25 mK</strong></button>
+            </div>
+            <p class="stage-detail" aria-live="polite">Select a stage to locate it in the cryostat. Temperatures are representative operating values.</p>
+          </aside>
+        </div>
+      </div>
+      <p class="figure-note">Geometry follows the Bluefors SD cryostat documented in Shaw’s thesis. The compressor and gas-handling pumps sit outside the cryostat. The dimensional basis is in the <a href="#specifications">model specifications</a>.</p>
+    </section>
+
+    <section class="cycle section-gap" id="cycle" aria-labelledby="cycle-title">
+      <div class="section-head">
+        <h2 id="cycle-title">Follow the helium</h2>
+        <p>Trace the circulating <sup>3</sup>He from the condensing line to the mixing chamber, then back through the still and the room-temperature pumps.</p>
+      </div>
+      <div class="flow-index" aria-label="Cycle sequence">
+        <a href="#precool">Precool</a><span aria-hidden="true">→</span><a href="#exchange">Exchange heat</a><span aria-hidden="true">→</span><a href="#dilute">Dilute</a><span aria-hidden="true">→</span><a href="#return">Recover</a><span aria-hidden="true">↺</span>
+      </div>
+
+      <article class="lesson" id="precool">
+        <div class="lesson-copy">
+          <p class="eyebrow">01 <span></span> Precooling</p>
+          <h3>Bring the gas down to a few kelvin</h3>
+          <p>A pulse-tube cryocooler first cools the two warmest cryogenic flanges. Copper links carry heat from the flanges to the cold head, and the flanges cool the radiation shields and intercept heat conducted down the wiring.</p>
+          <p>The incoming <sup>3</sup>He-rich gas loses heat to these stages on its way down. Below the 4 K stage, the condensing circuit cools it further so it can enter the dilution unit as a liquid.</p>
+          <p class="model-spec"><strong>Model</strong> PT410-RM cold head, 389 mm from mounting face to the second heat station. <a href="#ref-pulse">Drawing</a></p>
+        </div>
+        <figure class="model-card component-card">
+          <figcaption class="model-bar"><strong>Pulse-tube cold head</strong><button type="button" data-reset aria-label="Reset cold head view">↺ Reset</button></figcaption>
+          <div class="viewport component-viewport" data-model="pulse" tabindex="0" aria-label="Interactive cold head. Arrow keys orbit. Plus and minus zoom.">
+            <div class="viewport-art"></div><p class="fallback" hidden>3D rendering is unavailable.</p>
+          </div>
+        </figure>
+      </article>
+
+      <article class="lesson" id="exchange">
+        <div class="lesson-copy">
+          <p class="eyebrow">02 <span></span> Counterflow</p>
+          <h3>Use the returning fluid to precool the feed</h3>
+          <p>Cold dilute solution rises from the mixing chamber. Concentrated <sup>3</sup>He moves down in a separate channel and transfers heat to the colder return stream through the tube wall.</p>
+          <p>Many units add discrete exchangers with sintered metal at the cold end. Their large wetted surface helps overcome thermal resistance between the helium and the metal.</p>
+          <p class="model-spec"><strong>Model</strong> 500 mm straight exchanger with a 1.00 mm OD inner tube and a 6.00 mm ID outer tube. Switch to the length view to see the full tube. <a href="#ref-exchanger">Dimensions</a></p>
+        </div>
+        <figure class="model-card component-card">
+          <figcaption class="model-bar"><strong>Tube-in-tube exchanger</strong><div class="model-controls"><button type="button" data-cross aria-pressed="true">Cross-section</button><button type="button" data-reset aria-label="Reset exchanger view">↺ Reset</button></div></figcaption>
+          <div class="viewport component-viewport" data-model="exchange" tabindex="0" aria-label="Interactive exchanger. Cross-section view is open by default. Arrow keys orbit. Plus and minus zoom.">
+            <div class="viewport-art"></div><p class="fallback" hidden>3D rendering is unavailable.</p>
+          </div>
+          <div class="flow-key"><span><i class="warm"></i> Concentrated feed ↓</span><span><i class="cool"></i> Dilute return ↑</span></div>
+        </figure>
+      </article>
+
+      <article class="lesson" id="dilute">
+        <div class="lesson-copy">
+          <p class="eyebrow">03 <span></span> Dilution</p>
+          <h3>Absorb heat across the phase boundary</h3>
+          <p>Below about 0.87 K, a mixture of suitable composition separates into a lighter, <sup>3</sup>He-rich phase above a denser, <sup>4</sup>He-rich phase. Even near absolute zero, the dilute phase contains about 6.6 mol% <sup>3</sup>He.</p>
+          <p>Each mole of <sup>3</sup>He that enters the dilute phase carries away enthalpy. Continuous circulation maintains this transfer and removes heat from the chamber and its thermally coupled experiment.</p>
+          <p>At low temperature with the feed precooled to the chamber temperature, the ideal cooling power is approximately <span class="formula">Q̇ ≈ 84 ṅ₃ T²</span> in watts when <i>T</i> is in kelvin and the <sup>3</sup>He molar flow <i>ṅ₃</i> is in mol/s. <a href="https://nanoscience.oxinst.com/assets/uploads/NanoScience/Brochures/Principles%20of%20dilution%20refrigeration_Sept15.pdf">Cooling power derivation</a></p>
+          <p class="model-spec"><strong>Model</strong> Ø100 × 40 mm with Ø10 mm inlet and outlet, based on a published research geometry. <a href="#ref-mixing">Dimensions</a></p>
+        </div>
+        <figure class="model-card component-card">
+          <figcaption class="model-bar"><strong>Mixing chamber</strong><div class="model-controls"><button type="button" data-flow aria-pressed="true">Flow on</button><button type="button" data-reset aria-label="Reset mixing chamber view">↺ Reset</button></div></figcaption>
+          <div class="viewport component-viewport" data-model="mixing" tabindex="0" aria-label="Interactive mixing chamber. The concentrated phase sits above the dilute phase. Arrow keys orbit. Plus and minus zoom.">
+            <div class="viewport-art"></div><p class="fallback" hidden>3D rendering is unavailable.</p>
+          </div>
+          <div class="flow-key"><span><i class="warm"></i> Concentrated phase</span><span><i class="cool"></i> Dilute phase</span></div>
+        </figure>
+      </article>
+
+      <article class="lesson" id="return">
+        <div class="lesson-copy">
+          <p class="eyebrow">04 <span></span> Recovery</p>
+          <h3>Evaporate <sup>3</sup>He and return it to the inlet</h3>
+          <p>The still receives the dilute solution. Near 0.7 K, <sup>3</sup>He has a much higher vapor pressure than <sup>4</sup>He, so pumping above the liquid removes mostly <sup>3</sup>He. A heater helps set the evaporation and circulation rate.</p>
+          <p>The room-temperature gas handling system pumps the vapor, cleans it and sends it back into the condensing line. Removing <sup>3</sup>He from the still sustains the supply of dilute solution from the mixing chamber.</p>
+          <p class="model-spec"><strong>Model</strong> Schematic vessel with a Ø1.00 mm, 1.2 m immersed feed coil from a published still design. <a href="#ref-still">Dimensions</a></p>
+        </div>
+        <figure class="model-card component-card">
+          <figcaption class="model-bar"><strong>Still and pump outlet</strong><div class="model-controls"><button type="button" data-flow aria-pressed="true">Flow on</button><button type="button" data-reset aria-label="Reset still view">↺ Reset</button></div></figcaption>
+          <div class="viewport component-viewport" data-model="still" tabindex="0" aria-label="Interactive still. Helium-3-rich vapor exits through the top pipe. Arrow keys orbit. Plus and minus zoom.">
+            <div class="viewport-art"></div><p class="fallback" hidden>3D rendering is unavailable.</p>
+          </div>
+          <div class="flow-key"><span><i class="cool"></i> Dilute liquid</span><span><i class="warm"></i> <sup>3</sup>He-rich vapor</span></div>
+        </figure>
+      </article>
+    </section>
+
+    <section id="specifications" class="section-gap specifications" aria-labelledby="spec-title">
+      <div class="section-head">
+        <h2 id="spec-title">Model specifications</h2>
+        <p>Dimensions are in millimetres. Close-ups use their own reference designs and scale independently of the overview.</p>
+      </div>
+      <div class="spec-table">
+        <table>
+          <thead><tr><th scope="col">Model</th><th scope="col">Dimensions used</th><th scope="col">Reference and scope</th></tr></thead>
+          <tbody>
+            <tr id="ref-cryostat"><th scope="row">Cryostat</th><td>Vacuum can segments 500 + 800; 4 K shield bore Ø208; sample clearance Ø180 × 310</td><td><a href="https://etheses.durham.ac.uk/id/eprint/16249/1/MKID_Microscopes-BShaw_Thesis.pdf?DDD25+=#page=68">Shaw, Fig. 4.13 and §4.4.1</a>. Unlabeled flange positions and shell radii were estimated from the drawing. Internal plumbing is simplified.</td></tr>
+            <tr><th scope="row">SD performance</th><td>30 mK guaranteed base, 25 mK expected; 250 µW at 100 mK guaranteed</td><td><a href="https://bluefors.com/products/dilution-refrigerator-measurement-systems/sd-dilution-refrigerator-measurement-system/#technical-specifications">Bluefors SD specifications</a>. The standard Ø148 flange is distinct from the optical configuration above.</td></tr>
+            <tr id="ref-pulse"><th scope="row">Pulse tube</th><td>389 mount-to-cold-end, 195.7 first-stage offset, Ø186.7 top flange, Ø129.5 first stage, Ø94 second stage</td><td><a href="https://cdn.bluefors.com/wp-content/uploads/2023/09/22145525/PT410-RM-CH60410-Cold-Head-Drawing.pdf">Cryomech PT410-RM outline</a>. Tube layout and connections are simplified.</td></tr>
+            <tr id="ref-exchanger"><th scope="row">Heat exchanger</th><td>500 length, 1.00 OD / 0.65 ID concentr. tube, 6.00 ID return tube</td><td><a href="https://repositum.tuwien.at/bitstream/20.500.12708/14586/2/Wikus%20Patrick%20-%202007%20-%20Dilution%20refrigeration%20of%20multi-ton%20cold%20masses.pdf">Wikus, §2.5</a>. The 3D section shows the nested bores end-on. Outer wall thickness is assumed.</td></tr>
+            <tr id="ref-mixing"><th scope="row">Mixing chamber</th><td>Ø100 × 40, Ø10 inlet/outlet</td><td><a href="https://www.sciencedirect.com/science/article/pii/S0140700724000963">International Journal of Refrigeration, Fig. 1</a>. Published research geometry. Liquid levels and marker speeds are illustrative.</td></tr>
+            <tr id="ref-still"><th scope="row">Still</th><td>Ø1.00 OD / Ø0.60 ID × 1,200 immersed coil</td><td><a href="https://www.boreas-cryogenics.com/web_upfile/ck_file/files/2024/02/02.pdf">Zhai et al., Fig. 5 and §II-B</a>. Vessel envelope is schematic.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="figure-note">Operating principles and stage functions are described in <a href="https://bluefors.com/stories/how-does-a-dilution-refrigerator-work/">Bluefors’ dilution cycle guide</a> and <a href="https://bluefors.com/stories/components-of-the-dilution-refrigerator-measurement-system/">cryostat component guide</a>.</p>
+    </section>
+  </main>
+  <footer class="footer"><div class="page"><span>Cryogenics field guide</span><a href="#top">Back to top ↑</a></div></footer>
+</body>
+</html>
