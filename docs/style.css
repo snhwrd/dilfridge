@@ -177,6 +177,21 @@ section[id], article[id], tr[id] { scroll-margin-top: 24px; }
 .lesson-copy > p:not(.eyebrow) { font-size: .96rem; line-height: 1.66; color: var(--muted); margin-bottom: 12px; }
 .lesson-copy .model-spec { margin: 19px 0 0; padding-left: 12px; border-left: 2px solid #c49169; font-size: .81rem !important; }
 .model-spec strong { color: var(--ink); margin-right: 4px; }
+
+#dilute { row-gap: 22px; }
+.phase-details { grid-column: 1 / -1; scroll-margin-top: 24px; }
+.phase-details summary { padding: 12px 16px; background: var(--panel); cursor: pointer; font-size: .92rem; font-weight: 675; }
+.phase-details summary:focus-visible { outline-offset: -3px; }
+.phase-details[open] summary { border-bottom: 1px solid var(--line); }
+.phase-body { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); align-items: center; gap: clamp(16px, 4vw, 44px); padding: clamp(12px, 3vw, 30px); }
+.phase-figure { width: 100%; max-width: 530px; margin: 0 auto; }
+.phase-figure img { display: block; width: 100%; height: auto; }
+.phase-copy p { margin: 0 0 12px; color: var(--muted); font-size: .92rem; line-height: 1.6; }
+.phase-copy p:last-child { margin-bottom: 0; }
+.phase-copy strong { color: var(--ink); }
+@media (max-width: 680px) {
+  .phase-body { grid-template-columns: minmax(0, 1fr); }
+}
 .component-card > .model-bar { flex-wrap: wrap; }
 .component-viewport { height: 295px; }
 .flow-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 17px; min-height: 38px; padding: 6px 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: .74rem; }
