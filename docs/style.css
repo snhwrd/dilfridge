@@ -6,6 +6,10 @@
   --muted: #575952;
   --line: #dcdcd2;
   --accent: #9f4b25;
+  --diagram-feed: #9a4a25;
+  --diagram-return: #24686e;
+  --diagram-heat: #624c78;
+  --diagram-paper: #f5f3ec;
   --mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
   --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -64,7 +68,9 @@ section[id], article[id], tr[id] { scroll-margin-top: 24px; }
 .stages strong { font: 600 .69rem var(--mono); letter-spacing: -.02em; color: #534536; }
 .stage-dot { width: 8px; height: 8px; border-radius: 50%; }
 .s0 { background: #616b72; }.s1 { background: #95613f; }.s2 { background: #ae7637; }.s3 { background: #9f6132; }.s4 { background: #776346; }.s5 { background: #3e6b73; }
-.stage-detail { margin: 18px 9px 0; font-size: .78rem; line-height: 1.55; color: var(--muted); }
+.stage-detail, .stage-base { margin: 14px 9px 0; font-size: .78rem; line-height: 1.55; color: var(--muted); }
+.stage-base { padding-top: 10px; border-top: 1px solid var(--line); }
+.stage-base a { color: #854324; }
 .figure-note { margin: 12px 0 0; color: var(--muted); font-size: .78rem; line-height: 1.65; }
 .figure-note a, .model-spec a, td a { color: #854324; }
 .fallback { position: absolute; z-index: 1; inset: 38% 10% auto; text-align: center; background: var(--panel); padding: 14px; border: 1px solid var(--line); border-radius: 6px; }
@@ -75,6 +81,97 @@ section[id], article[id], tr[id] { scroll-margin-top: 24px; }
 .flow-index { display: flex; flex-wrap: wrap; gap: 9px 13px; padding-block: 17px; font: 600 .73rem var(--mono); color: var(--accent); align-items: center; }
 .flow-index a { text-decoration: none; border: 1px solid #dcd3c5; background: #fffcf6; padding: 7px 10px; border-radius: 4px; }
 .flow-index a:hover { background: #eee5d9; }
+.cycle-map { background: var(--diagram-paper); }
+.cycle-map .model-bar { flex-wrap: wrap; background: var(--panel); }
+.cycle-map-key { display: flex; flex-wrap: wrap; gap: 5px 14px; color: var(--muted); font-size: .75rem; }
+.cycle-map-key span { display: inline-flex; align-items: center; gap: 6px; }
+.cycle-map-key i { width: 17px; border-top: 2px solid var(--diagram-feed); }
+.cycle-map-key .heat-key { border-top: 2px dashed var(--diagram-heat); }
+.cycle-routes {
+  --route-gap: clamp(13px, 3vw, 31px);
+  --route-step: 24px;
+  display: grid;
+  grid-template-columns: minmax(81px, .78fr) repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "compressor pumps pumps"
+    "station-one precool-one vapor"
+    "station-two precool-two vapor"
+    ". condenser still"
+    ". exchanger exchanger"
+    ". chamber chamber";
+  gap: var(--route-step) var(--route-gap);
+  max-width: 52rem;
+  margin-inline: auto;
+  padding: 22px clamp(10px, 3vw, 32px);
+}
+.route-node {
+  position: relative;
+  display: grid;
+  align-content: center;
+  min-height: 48px;
+  padding: 8px clamp(3px, 1vw, 12px);
+  border-radius: 5px;
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px #cfcbbf;
+  font-size: clamp(.72rem, 1.6vw, .9rem);
+  line-height: 1.25;
+  text-align: center;
+}
+.route-node strong { font-weight: 675; }
+.route-node small { margin-top: 3px; font-size: .86em; color: var(--muted); }
+.route-compressor { grid-area: compressor; }
+.route-pumps { grid-area: pumps; }
+.route-station-one { grid-area: station-one; }
+.route-station-two { grid-area: station-two; }
+.route-precool-one { grid-area: precool-one; }
+.route-precool-two { grid-area: precool-two; }
+.route-condenser { grid-area: condenser; }
+.route-still { grid-area: still; }
+.route-temperature { white-space: nowrap; }
+.route-exchanger { grid-area: exchanger; }
+.route-chamber { grid-area: chamber; }
+.route-compressor, .route-station { background: #eaece8; }
+.route-station::before { position: absolute; inset: auto 0 100%; color: #56616a; }
+.route-station-one::before { content: "↕"; font-size: 1.1rem; line-height: var(--route-step); }
+.route-station-two::before { content: ""; width: 2px; height: var(--route-step); margin: auto; background: #56616a; }
+.route-heat-link { position: absolute; top: 50%; left: 100%; width: var(--route-gap); border-top: 2px dashed var(--diagram-heat); }
+.route-heat-link::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 0;
+  border-block: 4px solid transparent;
+  border-right: 6px solid var(--diagram-heat);
+}
+.route-feed::before, .route-return::after, .route-vapor::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 10px;
+  height: var(--route-step);
+  clip-path: polygon(40% 0, 60% 0, 60% calc(100% - 7px), 100% calc(100% - 7px), 50% 100%, 0 calc(100% - 7px), 40% calc(100% - 7px));
+}
+.route-feed::before { bottom: 100%; background: var(--diagram-feed); transform: translateX(-50%); }
+.route-return::after, .route-vapor::before { background: var(--diagram-return); transform: translateX(-50%) rotate(180deg); }
+.route-return::after { top: 100%; }
+.route-exchanger::before, .route-chamber::before { left: calc((100% - var(--route-gap)) / 4); }
+.route-exchanger::after { left: calc(75% + var(--route-gap) / 4); }
+.route-vapor { grid-area: vapor; position: relative; display: grid; place-items: center; text-align: center; }
+.route-vapor::before { top: calc(-1 * var(--route-step)); bottom: calc(-1 * var(--route-step)); height: auto; }
+.route-vapor span {
+  position: relative;
+  padding: 5px;
+  border-radius: 4px;
+  background: var(--diagram-paper);
+  color: var(--diagram-return);
+  font-size: clamp(.68rem, 1.5vw, .82rem);
+  font-weight: 650;
+}
+.route-channels { display: grid; grid-template-columns: 1fr 1fr; gap: var(--route-gap); margin-top: 5px; font-size: .86em; }
+.route-channels span:first-child { color: var(--diagram-feed); }
+.route-channels span:last-child { color: var(--diagram-return); }
+.diagram-note { margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+.cycle-map > .diagram-note, .still-note { padding: 10px 14px; border-top: 1px solid var(--line); background: var(--panel); }
 .lesson { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: clamp(30px, 8vw, 112px); align-items: center; padding: 36px 0; border-bottom: 1px solid var(--line); }
 .lesson h3 { font-size: clamp(1.65rem, 3.1vw, 2.66rem); font-weight: 580; letter-spacing: -.052em; line-height: 1.08; margin-bottom: 15px; }
 .lesson-copy > p:not(.eyebrow) { font-size: .96rem; line-height: 1.66; color: var(--muted); margin-bottom: 12px; }
@@ -85,6 +182,30 @@ section[id], article[id], tr[id] { scroll-margin-top: 24px; }
 .flow-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 17px; min-height: 38px; padding: 6px 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: .74rem; }
 .flow-key i { display: inline-block; width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; }
 .warm { background: #b25729; }.cool { background: #307d88; }
+.exchanger-card { container-type: inline-size; }
+.diagram-inset { display: grid; align-content: center; justify-items: center; padding: 12px; border-top: 1px solid var(--line); background: var(--diagram-paper); }
+.diagram-title { margin: 0 0 6px; font-size: .87rem; font-weight: 675; }
+.diagram-inset .diagram-note { text-align: center; }
+.section-diagram { display: block; width: min(100%, 380px); height: auto; }
+.section-diagram text { fill: var(--ink); font: 600 14px var(--sans); }
+.section-diagram .concentrated-liquid { fill: #f3d8be; }
+.section-diagram .dilute-liquid { fill: #d0e5e3; }
+.section-diagram .diagram-metal { fill: #e6e3d9; stroke: #69685e; }
+.section-diagram .diagram-wall { fill: none; stroke: #69685e; stroke-width: 2; }
+.section-diagram .diagram-boundary { fill: none; stroke: #545953; stroke-width: 1.4; }
+.section-diagram .diagram-leader { fill: none; stroke: #726f64; }
+.section-diagram .feed-fill { fill: var(--diagram-feed); }
+.section-diagram .return-fill { fill: var(--diagram-return); }
+.section-diagram .heat-fill { fill: var(--diagram-heat); }
+.section-diagram .feed-arrow, .section-diagram .return-arrow, .section-diagram .heat-arrow { fill: none; stroke-width: 2.3; }
+.section-diagram .feed-arrow { stroke: var(--diagram-feed); }
+.section-diagram .return-arrow { stroke: var(--diagram-return); }
+.section-diagram .heat-arrow { stroke: var(--diagram-heat); stroke-dasharray: 4 3; }
+.still-note { padding-top: 0; border-top: 0; }
+@container (min-width: 535px) {
+  .exchanger-views { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .exchanger-inset { border-top: 0; border-left: 1px solid var(--line); }
+}
 .specifications .section-head { border-bottom: none; }
 .spec-table { border: 1px solid var(--line); border-radius: 7px; overflow: hidden; background: var(--panel); }
 table { width: 100%; border-collapse: collapse; text-align: left; }
@@ -123,6 +244,7 @@ tbody tr:last-child > * { border-bottom: 0; }
   th, td { padding: 8px 7px; font-size: .72rem; }
 }
 @media (max-width: 380px) {
+  .masthead-inner { flex-wrap: wrap; padding-block: 8px; }
   .hero-card > .model-bar { flex-wrap: wrap; }
   .model-help { font-size: .58rem; }
 }

@@ -302,7 +302,7 @@ export function exchange() {
   disk(end, .325, 1.8, warm);
   return {group, axial, end, labels: [
     {text: 'Brass outer wall', short: 'Outer wall', point: [2.6, .9, 2.0], axialPoint: [3.55, 150, 0], side: 1},
-    {text: 'Dilute return', point: [-2.1, .9, .6], axialPoint: [-2.1, 0, 0], side: -1},
+    {text: 'Dilute return', point: [-2.1, .9, .6], axialPoint: [-2.1, 0, 0], side: -1, offset: -26},
     {text: 'Concentrated feed', short: '³He feed', point: [.24, .9, .10], axialPoint: [.23, -150, 0], side: 1, offset: 34},
   ]};
 }
@@ -364,6 +364,6 @@ export function still() {
   return {group, flows: [tracer(group, vapor, .9, 7, warmDot, .5), tracer(group, liquid, .8, 5, coolDot, .34)], labels: [
     {text: 'To room-temperature pumps', short: 'To pumps', point: [9, 57, 0], side: 1},
     {text: 'Immersed feed coil', point: [24, -12, 6], side: 1},
-    {text: 'From mixing chamber', short: 'Dilute inlet', point: [-23, -37, -4], side: -1},
+    {text: 'From mixing chamber', short: 'Dilute inlet', point: [-23, -37, -4], side: 1, offset: -24},
   ]};
 }

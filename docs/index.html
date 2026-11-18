@@ -58,7 +58,8 @@
               <button type="button" data-stage="4" aria-pressed="false"><span class="stage-dot s4"></span><span>Cold plate</span><strong>~ 0.1 K</strong></button>
               <button type="button" data-stage="5" aria-pressed="false"><span class="stage-dot s5"></span><span>Mixing chamber</span><strong>~ 25 mK</strong></button>
             </div>
-            <p class="stage-detail" aria-live="polite">Select a stage to locate it in the cryostat. Temperatures are representative operating values.</p>
+            <p class="stage-detail" aria-live="polite">Select a stage to locate it in the cryostat.</p>
+            <p class="stage-base">The SD’s expected base temperature is 25 mK with no applied heat load. Under load, the chamber runs warmer. At 100 mK, the SD can remove at least 250 µW while holding that temperature. <a href="#ref-sd">SD specifications</a></p>
           </aside>
         </div>
       </div>
@@ -74,12 +75,36 @@
         <a href="#precool">Precool</a><span aria-hidden="true">→</span><a href="#exchange">Exchange heat</a><span aria-hidden="true">→</span><a href="#dilute">Dilute</a><span aria-hidden="true">→</span><a href="#return">Recover</a><span aria-hidden="true">↺</span>
       </div>
 
+      <figure class="model-card cycle-map">
+        <figcaption class="model-bar">
+          <strong>The helium circuit</strong>
+          <span class="cycle-map-key"><span><i></i> Helium flow</span><span><i class="heat-key"></i> Heat transfer</span></span>
+        </figcaption>
+        <div class="cycle-routes" role="img" aria-label="In steady operation, room-temperature pumps feed helium-3-rich gas through the 50 K and 4 K flanges, which transfer heat to a separate, compressor-driven pulse-tube cold head. The gas liquefies in the condensing circuit and flows through the feed channel of the counterflow exchangers to the mixing chamber. After helium-3 crosses into the dilute liquid, it returns through the other channel to the still. Helium-3-rich vapor from the still goes back to the pumps.">
+          <div class="route-node route-compressor"><strong>Pulse-tube compressor</strong></div>
+          <div class="route-node route-pumps"><strong>Room-temperature pumps</strong></div>
+          <div class="route-node route-station route-station-one"><strong>First cold head station</strong><span class="route-heat-link"></span></div>
+          <div class="route-node route-feed route-precool-one"><strong>50 K flange</strong><small>Gas precooling</small></div>
+          <div class="route-node route-station route-station-two"><strong>Second cold head station</strong><span class="route-heat-link"></span></div>
+          <div class="route-node route-feed route-precool-two"><strong>4 K flange</strong><small>Gas precooling</small></div>
+          <div class="route-vapor"><span><sup>3</sup>He-rich vapor</span></div>
+          <div class="route-node route-feed route-condenser"><strong>Condensing circuit</strong><small>Gas becomes liquid</small></div>
+          <div class="route-node route-return route-still"><strong>Still <span class="route-temperature">· ~0.7 K</span></strong><small><sup>3</sup>He evaporates</small></div>
+          <div class="route-node route-feed route-return route-exchanger">
+            <strong>Counterflow exchangers</strong>
+            <div class="route-channels"><span>Feed channel ↓</span><span>Return channel ↑</span></div>
+          </div>
+          <div class="route-node route-feed route-chamber"><strong>Mixing chamber</strong><small><sup>3</sup>He crosses into the dilute liquid</small></div>
+        </div>
+        <p class="diagram-note">The pulse tube uses a separate helium circuit. The dashed links show heat flowing from the flanges to the cold head.</p>
+      </figure>
+
       <article class="lesson" id="precool">
         <div class="lesson-copy">
           <p class="eyebrow">01 <span></span> Precooling</p>
           <h3>Bring the gas down to a few kelvin</h3>
           <p>A pulse-tube cryocooler first cools the two warmest cryogenic flanges. Copper links carry heat from the flanges to the cold head, and the flanges cool the radiation shields and intercept heat conducted down the wiring.</p>
-          <p>The incoming <sup>3</sup>He-rich gas loses heat to these stages on its way down. Below the 4 K stage, the condensing circuit cools it further so it can enter the dilution unit as a liquid.</p>
+          <p>The incoming <sup>3</sup>He-rich gas gives up heat at the 50 K and 4 K flanges. Below the 4 K stage, further cooling in the condensing circuit turns the gas into liquid before it reaches the counterflow exchangers.</p>
           <p class="model-spec"><strong>Model</strong> PT410-RM cold head, 389 mm from mounting face to the second heat station. <a href="#ref-pulse">Drawing</a></p>
         </div>
         <figure class="model-card component-card">
@@ -100,11 +125,11 @@
         <div class="lesson-copy">
           <p class="eyebrow">02 <span></span> Counterflow</p>
           <h3>Use the returning fluid to precool the feed</h3>
-          <p>Cold dilute solution rises from the mixing chamber. Concentrated <sup>3</sup>He moves down in a separate channel and transfers heat to the colder return stream through the tube wall.</p>
+          <p>Concentrated <sup>3</sup>He flows down the inner tube. The colder dilute solution from the mixing chamber flows toward the still through the annulus, the space between the two tubes. Heat passes from feed to return through the inner tube wall.</p>
           <p>Many units add discrete exchangers with sintered metal at the cold end. Their large wetted surface helps overcome thermal resistance between the helium and the metal.</p>
           <p class="model-spec"><strong>Model</strong> 500 mm straight exchanger with a 1.00 mm OD inner tube and a 6.00 mm ID outer tube. Switch to the length view to see the full tube. <a href="#ref-exchanger">Dimensions</a></p>
         </div>
-        <figure class="model-card component-card">
+        <figure class="model-card component-card exchanger-card">
           <figcaption class="model-bar">
             <strong>Tube-in-tube exchanger</strong>
             <div class="model-controls">
@@ -113,8 +138,36 @@
               <button type="button" data-reset aria-label="Reset exchanger view">↺ Reset</button>
             </div>
           </figcaption>
-          <div class="viewport component-viewport" data-model="exchange" tabindex="0" aria-label="Interactive exchanger. Cross-section view is open by default. Arrow keys orbit. Plus and minus zoom.">
-            <div class="viewport-art"></div><p class="fallback" hidden>3D rendering is unavailable.</p>
+          <div class="exchanger-views">
+            <div class="viewport component-viewport" data-model="exchange" tabindex="0" aria-label="Interactive exchanger. Cross-section view is open by default. Arrow keys orbit. Plus and minus zoom.">
+              <div class="viewport-art"></div><p class="fallback" hidden>3D rendering is unavailable.</p>
+            </div>
+            <div class="diagram-inset exchanger-inset">
+              <p class="diagram-title">Lengthwise section</p>
+              <svg class="section-diagram" viewBox="0 0 300 190" role="img" aria-labelledby="exchanger-diagram-title exchanger-diagram-desc">
+                <title id="exchanger-diagram-title">Counterflow through nested tubes</title>
+                <desc id="exchanger-diagram-desc">Helium-3-rich feed flows down the inner tube. Dilute liquid flows up the annulus around it. Dashed arrows show heat passing outward across the inner tube wall into the dilute liquid.</desc>
+                <defs>
+                  <marker id="exchange-feed-arrow" viewBox="0 0 10 10" markerWidth="4" markerHeight="4" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" class="feed-fill"/></marker>
+                  <marker id="exchange-return-arrow" viewBox="0 0 10 10" markerWidth="4" markerHeight="4" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" class="return-fill"/></marker>
+                  <marker id="exchange-heat-arrow" viewBox="0 0 10 10" markerWidth="5" markerHeight="5" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" class="heat-fill"/></marker>
+                </defs>
+                <path d="M100 31H200V181H100Z" class="dilute-liquid"/>
+                <path d="M133 31H167V181H133Z" class="concentrated-liquid"/>
+                <path d="M100 31V181 M133 31V181 M167 31V181 M200 31V181" class="diagram-wall"/>
+                <path d="M150 36V166" class="feed-arrow" marker-end="url(#exchange-feed-arrow)"/>
+                <path d="M116 166V44" class="return-arrow" marker-end="url(#exchange-return-arrow)"/>
+                <path d="M184 166V44" class="return-arrow" marker-end="url(#exchange-return-arrow)"/>
+                <path d="M147 120H118" class="heat-arrow" marker-end="url(#exchange-heat-arrow)"/>
+                <path d="M153 120H182" class="heat-arrow" marker-end="url(#exchange-heat-arrow)"/>
+                <path d="M79 78H109 M218 61H193L167 72 M219 121H187" class="diagram-leader"/>
+                <text x="150" y="21" text-anchor="middle" class="feed-fill">³He-rich feed</text>
+                <text x="72" y="73" text-anchor="end" class="return-fill"><tspan x="72">Dilute</tspan><tspan x="72" dy="17">return</tspan></text>
+                <text x="223" y="56"><tspan x="223">Inner</tspan><tspan x="223" dy="17">tube wall</tspan></text>
+                <text x="223" y="126" class="heat-fill">Heat</text>
+              </svg>
+              <p class="diagram-note">Widened to show the annulus on both sides of the inner tube.</p>
+            </div>
           </div>
           <div class="flow-key"><span><i class="warm"></i> Concentrated feed ↓</span><span><i class="cool"></i> Dilute return ↑</span></div>
         </figure>
@@ -125,7 +178,7 @@
           <p class="eyebrow">03 <span></span> Dilution</p>
           <h3>Absorb heat across the phase boundary</h3>
           <p>Below about 0.87 K, a mixture of suitable composition separates into a lighter, <sup>3</sup>He-rich phase above a denser, <sup>4</sup>He-rich phase. Even near absolute zero, the dilute phase contains about 6.6 mol% <sup>3</sup>He.</p>
-          <p>Each mole of <sup>3</sup>He that enters the dilute phase carries away enthalpy. Continuous circulation maintains this transfer and removes heat from the chamber and its thermally coupled experiment.</p>
+          <p><sup>3</sup>He absorbs heat as it enters the <sup>4</sup>He-rich liquid. Heat from the experiment flows through the mixing-chamber plate into the chamber. Pumping <sup>3</sup>He out of the still keeps more <sup>3</sup>He crossing the boundary to replace it.</p>
           <p>At low temperature with the feed precooled to the chamber temperature, the ideal cooling power is approximately <span class="formula">Q̇ ≈ 84 ṅ₃ T²</span> in watts when <i>T</i> is in kelvin and the <sup>3</sup>He molar flow <i>ṅ₃</i> is in mol/s. <a href="https://nanoscience.oxinst.com/assets/uploads/NanoScience/Brochures/Principles%20of%20dilution%20refrigeration_Sept15.pdf">Cooling power derivation</a></p>
           <p class="model-spec"><strong>Model</strong> Ø100 × 40 mm with Ø10 mm inlet and outlet, based on a published research geometry. <a href="#ref-mixing">Dimensions</a></p>
         </div>
@@ -142,6 +195,40 @@
             <div class="viewport-art"></div><p class="fallback" hidden>3D rendering is unavailable.</p>
           </div>
           <div class="flow-key"><span><i class="warm"></i> Concentrated phase</span><span><i class="cool"></i> Dilute phase</span></div>
+          <div class="diagram-inset mixing-inset">
+            <p class="diagram-title">Where the experiment loses heat</p>
+            <svg class="section-diagram" viewBox="0 0 340 227" role="img" aria-labelledby="mixing-diagram-title mixing-diagram-desc">
+              <title id="mixing-diagram-title">Helium flow and heat flow at the mixing chamber</title>
+              <desc id="mixing-diagram-desc">A solid arrow shows helium-3 crossing down from the helium-3-rich upper liquid into the helium-4-rich lower liquid. The lower liquid leaves via the dilute return tube. A dashed arrow shows heat flowing up from the experiment through the mixing-chamber plate into the liquid.</desc>
+              <defs>
+                <marker id="mixing-feed-arrow" viewBox="0 0 10 10" markerWidth="4" markerHeight="4" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" class="feed-fill"/></marker>
+                <marker id="mixing-return-arrow" viewBox="0 0 10 10" markerWidth="4" markerHeight="4" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" class="return-fill"/></marker>
+                <marker id="mixing-heat-arrow" viewBox="0 0 10 10" markerWidth="5" markerHeight="5" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" class="heat-fill"/></marker>
+              </defs>
+              <path d="M29 51H311V98H29Z M53 12H70V51H53Z" class="concentrated-liquid"/>
+              <path d="M29 98H311V150H29Z M269 12H286V121H269Z" class="dilute-liquid"/>
+              <path d="M29 98H269 M286 98H311" class="diagram-boundary"/>
+              <path d="M53 12V51H29V150H311V51H286V12 M70 12V51H269V12 M269 51V121 M286 51V121" class="diagram-wall"/>
+              <rect x="29" y="150" width="282" height="12" rx="2" class="diagram-metal"/>
+              <rect x="110" y="162" width="14" height="34" class="diagram-metal"/>
+              <rect x="83" y="196" width="174" height="25" rx="4" class="diagram-metal"/>
+              <path d="M61.5 17V60" class="feed-arrow" marker-end="url(#mixing-feed-arrow)"/>
+              <path d="M110 82V123" class="feed-arrow" marker-end="url(#mixing-feed-arrow)"/>
+              <path d="M259 124H277.5V17" class="return-arrow" marker-end="url(#mixing-return-arrow)"/>
+              <path d="M117 196V131" class="heat-arrow" marker-end="url(#mixing-heat-arrow)"/>
+              <path d="M204 95V98 M223 173V162" class="diagram-leader"/>
+              <text x="79" y="29" class="feed-fill">³He feed</text>
+              <text x="258" y="29" text-anchor="end" class="return-fill">Dilute return</text>
+              <text x="37" y="74" class="feed-fill">³He-rich liquid</text>
+              <text x="260" y="92" text-anchor="end">Phase boundary</text>
+              <text x="122" y="117" class="feed-fill">³He crosses</text>
+              <text x="168" y="142" class="return-fill">⁴He-rich liquid</text>
+              <text x="106" y="180" text-anchor="end" class="heat-fill">Heat</text>
+              <text x="223" y="187" text-anchor="middle">Mixing-chamber plate</text>
+              <text x="170" y="213" text-anchor="middle">Experiment</text>
+            </svg>
+            <p class="diagram-note">The liquids share the same temperature at their boundary. Color identifies composition.</p>
+          </div>
         </figure>
       </article>
 
@@ -150,7 +237,7 @@
           <p class="eyebrow">04 <span></span> Recovery</p>
           <h3>Evaporate <sup>3</sup>He and return it to the inlet</h3>
           <p>The still receives the dilute solution. Near 0.7 K, <sup>3</sup>He has a much higher vapor pressure than <sup>4</sup>He, so pumping above the liquid removes mostly <sup>3</sup>He. A heater helps set the evaporation and circulation rate.</p>
-          <p>The room-temperature gas handling system pumps the vapor, cleans it and sends it back into the condensing line. Removing <sup>3</sup>He from the still sustains the supply of dilute solution from the mixing chamber.</p>
+          <p>The room-temperature pumps draw off the vapor, which is cleaned and returned to the condensing line. The incoming feed passes through a separate coil immersed in the still liquid. Heat passes through the coil wall into the still liquid and cools the feed before it enters the counterflow exchangers.</p>
           <p class="model-spec"><strong>Model</strong> Schematic vessel with a Ø1.00 mm, 1.2 m immersed feed coil from a published still design. <a href="#ref-still">Dimensions</a></p>
         </div>
         <figure class="model-card component-card">
@@ -166,6 +253,7 @@
             <div class="viewport-art"></div><p class="fallback" hidden>3D rendering is unavailable.</p>
           </div>
           <div class="flow-key"><span><i class="cool"></i> Dilute liquid</span><span><i class="warm"></i> <sup>3</sup>He-rich vapor</span></div>
+          <p class="diagram-note still-note">The dilute return from the mixing chamber enters through the lower inlet.</p>
         </figure>
       </article>
     </section>
@@ -180,7 +268,7 @@
           <thead><tr><th scope="col">Model</th><th scope="col">Dimensions used</th><th scope="col">Reference and scope</th></tr></thead>
           <tbody>
             <tr id="ref-cryostat"><th scope="row">Cryostat</th><td>Vacuum can segments 500 + 800; 4 K shield bore Ø208; sample clearance Ø180 × 310</td><td><a href="https://etheses.durham.ac.uk/id/eprint/16249/1/MKID_Microscopes-BShaw_Thesis.pdf?DDD25+=#page=68">Shaw, Fig. 4.13 and §4.4.1</a>. Unlabeled flange positions and shell radii were estimated from the drawing. Internal plumbing is simplified.</td></tr>
-            <tr><th scope="row">SD performance</th><td>30 mK guaranteed base, 25 mK expected; 250 µW at 100 mK guaranteed</td><td><a href="https://bluefors.com/products/dilution-refrigerator-measurement-systems/sd-dilution-refrigerator-measurement-system/#technical-specifications">Bluefors SD specifications</a>. The standard Ø148 flange is distinct from the optical configuration above.</td></tr>
+            <tr id="ref-sd"><th scope="row">SD performance</th><td>30 mK guaranteed base, 25 mK expected; 250 µW at 100 mK guaranteed</td><td><a href="https://bluefors.com/products/dilution-refrigerator-measurement-systems/sd-dilution-refrigerator-measurement-system/#technical-specifications">Bluefors SD specifications</a>. The standard Ø148 flange is distinct from the optical configuration above.</td></tr>
             <tr id="ref-pulse"><th scope="row">Pulse tube</th><td>389 mount-to-cold-end, 195.7 first-stage offset, Ø186.7 top flange, Ø129.5 first stage, Ø94 second stage</td><td><a href="https://cdn.bluefors.com/wp-content/uploads/2023/09/22145525/PT410-RM-CH60410-Cold-Head-Drawing.pdf">Cryomech PT410-RM outline</a>. Tube layout and connections are simplified.</td></tr>
             <tr id="ref-exchanger"><th scope="row">Heat exchanger</th><td>500 length, 1.00 OD / 0.65 ID concentr. tube, 6.00 ID return tube</td><td><a href="https://repositum.tuwien.at/bitstream/20.500.12708/14586/2/Wikus%20Patrick%20-%202007%20-%20Dilution%20refrigeration%20of%20multi-ton%20cold%20masses.pdf">Wikus, §2.5</a>. The 3D section shows the nested bores end-on. Outer wall thickness is assumed.</td></tr>
             <tr id="ref-mixing"><th scope="row">Mixing chamber</th><td>Ø100 × 40, Ø10 inlet/outlet</td><td><a href="https://www.sciencedirect.com/science/article/pii/S0140700724000963">International Journal of Refrigeration, Fig. 1</a>. Published research geometry. Liquid levels and marker speeds are illustrative.</td></tr>
