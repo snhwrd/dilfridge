@@ -38,7 +38,7 @@ function makeLabels(viewport, data) {
   layer.className = 'model-labels';
   layer.setAttribute('aria-hidden', 'true');
   viewport.append(layer);
-  return data.map(({text, point, ...options}) => {
+  return data.map(({text, point, axialPoint, ...options}) => {
     const label = document.createElement('div');
     label.className = 'model-label';
     const tag = document.createElement('span');
@@ -50,43 +50,48 @@ function makeLabels(viewport, data) {
     dot.className = 'label-dot';
     label.append(line, dot, tag);
     layer.append(label);
-    return {label, tag, dot, line, text, point: new T.Vector3(...point), ...options};
+    return {
+      label, tag, dot, line, text, ...options,
+      point: new T.Vector3(...point),
+      axialPoint: axialPoint && new T.Vector3(...axialPoint),
+    };
   });
 }
 
 function drawLabels(state, width, height) {
-  const labelSpace = state.kind === 'cryostat' ? 510 : 400;
+  const overview = state.kind === 'cryostat';
+  const compact = width < (overview ? 510 : 400);
+  const lengthView = state.kind === 'exchange' && state.model.axial.visible;
+  const margin = 11;
+  const minimumLeader = 8;
   for (const item of state.labels) {
-    const {label, tag, line, dot, point, side, interior, text, short = text, offset = 0} = item;
-    const projected = point.clone().project(state.camera);
+    const {label, tag, line, dot, point, axialPoint, side, interior, text, short = text, offset = 0} = item;
+    const projected = (lengthView ? axialPoint : point).clone().project(state.camera);
     const x = width * (.5 + projected.x / 2);
     const y = height * (.5 - projected.y / 2);
     label.hidden = !state.annotate || (interior && (state.model.closed.visible || Math.cos(state.yaw) < .18)) ||
-      (state.kind === 'exchange' && !state.model.end.visible) || x < 13 || x > width - 13 || y < 29 || y > height - 24;
+      x < margin || x > width - margin || y < margin || y > height - margin;
     if (label.hidden) continue;
-    const compact = width < labelSpace;
-    const showText = !compact || state.kind === 'cryostat';
+
     const caption = compact ? short : text;
     if (tag.textContent !== caption) tag.textContent = caption;
-    tag.hidden = !showText;
-    line.hidden = !showText;
-    dot.style.left = x + 'px';
-    dot.style.top = y + 'px';
-    if (!showText) continue;
     const tagWidth = tag.offsetWidth;
-    const preferred = x + side * (state.kind === 'cryostat' && !compact ? 57 : 23);
-    const end = side === 1 ? clamp(preferred, 12, width - tagWidth - 11) :
-      clamp(preferred, tagWidth + 11, width - 12);
-    if (side * (end - x) < 8) {
-      tag.hidden = true;
-      line.hidden = true;
+    const leftRoom = x - tagWidth - margin;
+    const rightRoom = width - x - tagWidth - margin;
+    const preferredRoom = side === 1 ? rightRoom : leftRoom;
+    const direction = preferredRoom >= minimumLeader ? side : -side;
+    const available = direction === 1 ? rightRoom : leftRoom;
+    if (available < minimumLeader) {
+      label.hidden = true;
       continue;
     }
-    const labelY = clamp(y + offset, 37, height - 33);
-    tag.style.left = (end - (side === -1 ? tagWidth : 0)) + 'px';
+
+    const end = x + direction * Math.min(available, overview && !compact ? 57 : 23);
+    const labelY = clamp(y + (lengthView ? 0 : offset), 37, height - 33);
+    tag.style.left = (end - (direction === -1 ? tagWidth : 0)) + 'px';
     tag.style.top = labelY + 'px';
-    line.style.left = x + 'px';
-    line.style.top = y + 'px';
+    dot.style.left = line.style.left = x + 'px';
+    dot.style.top = line.style.top = y + 'px';
     line.style.width = Math.hypot(end - x, labelY - y) + 'px';
     line.style.transform = 'rotate(' + Math.atan2(labelY - y, end - x) + 'rad)';
   }

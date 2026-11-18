@@ -283,9 +283,9 @@ export function pulse() {
   const group = new T.Group();
   coldHead(group);
   return {group, labels: [
-    {text: 'Room-temperature flange', point: [85, 203, 24], side: 1},
-    {text: 'First heat station', point: [-57, 7, 22], side: -1},
-    {text: 'Second heat station', point: [40, -186, 20], side: 1},
+    {text: 'Room-temperature flange', short: 'Top flange', point: [85, 203, 24], side: 1},
+    {text: 'First heat station', short: '1st heat station', point: [-57, 7, 22], side: -1},
+    {text: 'Second heat station', short: '2nd heat station', point: [40, -186, 20], side: 1},
   ]};
 }
 
@@ -301,9 +301,9 @@ export function exchange() {
   disk(axial, .08, 500, warm, origin, half);
   disk(end, .325, 1.8, warm);
   return {group, axial, end, labels: [
-    {text: 'Brass outer wall', point: [2.6, .9, 2.0], side: 1},
-    {text: 'Dilute return', point: [-2.1, .9, .6], side: -1},
-    {text: 'Concentrated feed', point: [.24, .9, .10], side: 1, offset: 34},
+    {text: 'Brass outer wall', short: 'Outer wall', point: [2.6, .9, 2.0], axialPoint: [3.55, 150, 0], side: 1},
+    {text: 'Dilute return', point: [-2.1, .9, .6], axialPoint: [-2.1, 0, 0], side: -1},
+    {text: 'Concentrated feed', short: '³He feed', point: [.24, .9, .10], axialPoint: [.23, -150, 0], side: 1, offset: 34},
   ]};
 }
 
@@ -362,8 +362,8 @@ export function still() {
   const vapor = new T.CatmullRomCurve3([[18, -4, 2], [11, 5, 1], [3, 23, 1], [2, 58, 1]].map(vector));
   const liquid = new T.CatmullRomCurve3([[-22, -40, 3], [-23, -21, 3], [-15, -10, 4], [7, -7, 2]].map(vector));
   return {group, flows: [tracer(group, vapor, .9, 7, warmDot, .5), tracer(group, liquid, .8, 5, coolDot, .34)], labels: [
-    {text: 'To room-temperature pumps', point: [9, 57, 0], side: 1},
+    {text: 'To room-temperature pumps', short: 'To pumps', point: [9, 57, 0], side: 1},
     {text: 'Immersed feed coil', point: [24, -12, 6], side: 1},
-    {text: 'From mixing chamber', point: [-23, -37, -4], side: -1},
+    {text: 'From mixing chamber', short: 'Dilute inlet', point: [-23, -37, -4], side: -1},
   ]};
 }

@@ -80,6 +80,7 @@ section[id], article[id], tr[id] { scroll-margin-top: 24px; }
 .lesson-copy > p:not(.eyebrow) { font-size: .96rem; line-height: 1.66; color: var(--muted); margin-bottom: 12px; }
 .lesson-copy .model-spec { margin: 19px 0 0; padding-left: 12px; border-left: 2px solid #c49169; font-size: .81rem !important; }
 .model-spec strong { color: var(--ink); margin-right: 4px; }
+.component-card > .model-bar { flex-wrap: wrap; }
 .component-viewport { height: 295px; }
 .flow-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 17px; min-height: 38px; padding: 6px 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: .74rem; }
 .flow-key i { display: inline-block; width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; }
